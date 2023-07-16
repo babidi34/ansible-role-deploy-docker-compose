@@ -11,12 +11,17 @@ Any pre-requisites that may not be covered by Ansible itself or the role should 
 Role Variables
 --------------
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
+docker_compose_file: Le chemin vers votre fichier docker-compose.yml sur votre machine locale.
+docker_compose_dest: Le répertoire de destination sur le serveur distant où le fichier docker-compose.yml sera copié.
+var_env_file: (Optionnel) Le chemin vers le fichier .env sur votre machine locale, qui sera copié dans le répertoire docker_compose_dest sur le serveur distant.
+docker_files: (Optionnel) Une liste des chemins vers les Dockerfiles sur votre machine locale qui seront utilisés pour construire des images Docker.
+docker_images: (Optionnel) Une liste des noms d'images Docker à construire. Chaque nom d'image doit correspondre à un Dockerfile dans la liste docker_files.
 
 Dependencies
 ------------
 
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
+- docker 
+- docker-compose
 
 Example Playbook
 ----------------
