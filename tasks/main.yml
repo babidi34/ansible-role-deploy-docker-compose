@@ -1,0 +1,41 @@
+---
+- name: Create the directory for docker-compose file
+  file:
+    path: "{{ docker_compose_dest }}"
+    state: directory
+
+- name: Copy .env file to remote host if it exists
+  copy:
+    src: "{{ inventory_dir }}/{{ var_env_file }}"
+    dest: "{{ docker_compose_dest }}/.env"
+  when: var_env_file is not false
+
+- name: Copy docker-compose file to remote host
+  copy:
+    src: "{{ inventory_dir }}/{{ docker_compose_file }}"
+    dest: "{{ docker_compose_dest }}/docker-compose.yml"
+
+- name: Copy Dockerfiles to remote host if they are defined
+  copy:
+    src: "{{ inventory_dir }}/{{ item.file }}"
+    dest: "{{ docker_compose_dest }}/{{ item.file | basename }}"
+  loop: "{{ docker_files }}"
+  loop_control:
+    loop_var: item
+
+- name: Build Docker images if Dockerfiles are defined
+  docker_image:
+    name: "{{ item.image }}"
+    build:
+      path: "{{ docker_compose_dest }}"
+      dockerfile: "{{ item.file | basename }}"
+  loop: "{{ docker_files | zip(docker_images) | list }}"
+  loop_control:
+    loop_var: item
+
+- name: Run docker-compose up
+  community.docker.docker_compose:
+    project_src: "{{ docker_compose_dest }}"
+    state: present
+    remove_orphans: true
+    restarted: true

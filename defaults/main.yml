@@ -1,0 +1,8 @@
+---
+# defaults file for roles/deploy-docker-compose
+
+docker_compose_file: ./docker-compose.yml
+docker_compose_dest: '/tmp/'
+docker_files: []
+docker_images: []
+var_env_file: false
