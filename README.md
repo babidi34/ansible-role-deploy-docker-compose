@@ -1,7 +1,15 @@
 Deploy Docker Compose
 =========
 
-A brief description of the role goes here.
+Le rôle Ansible deploy-docker-compose est conçu pour faciliter le déploiement d'applications conteneurisées en utilisant Docker et Docker Compose sur un serveur distant.
+
+Il automatise les tâches suivantes :
+
+Copie du fichier docker-compose.yml et du fichier optionnel .env depuis votre machine locale vers le serveur distant.
+Création du répertoire de destination sur le serveur distant si nécessaire.
+Si des Dockerfiles sont fournis, le rôle construit les images Docker correspondantes sur le serveur distant.
+Enfin, le rôle lance les conteneurs en utilisant la commande docker-compose up.
+Ce rôle est très flexible, il permet une configuration personnalisée via des variables, comme le chemin du fichier docker-compose.yml, le répertoire de destination sur le serveur distant, le chemin des Dockerfiles et les noms des images Docker à construire.
 
 Requirements
 ------------
